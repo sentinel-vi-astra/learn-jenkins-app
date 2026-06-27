@@ -20,5 +20,22 @@ pipeline {
                 '''
             }
         }
+        stage('Test') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh '''
+                    ls -al
+                    node --version
+                    npm --version
+                    test -f /build/index.js || { echo "index.js not found"; exit 1; }
+                    npm run test
+                '''
+            }
+        }
     }
 }
