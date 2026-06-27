@@ -29,11 +29,23 @@ pipeline {
             }
             steps {
                 sh '''
-                    ls -al
-                    node --version
-                    npm --version
                     test -f build/index.html || { echo "index.html not found"; exit 1; }
                     npm run test
+                '''
+            }
+        }
+        stage('E2E') {
+            agent {
+                docker {
+                    image 'pull mcr.microsoft.com/playwright:v1.61.0-noble'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh '''
+                    npm install serve
+                    node_modules\.bin\serve -s build
+                    npx playwright test
                 '''
             }
         }
