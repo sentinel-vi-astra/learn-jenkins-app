@@ -32,7 +32,7 @@ pipeline {
                     }
                     steps {
                         sh '''
-                            test -f build/index.js || { echo "index.js not found"; exit 1; }
+                            test -f build/index.html || { echo "index.html not found"; exit 1; }
                             npm run test
                         '''
                     }
