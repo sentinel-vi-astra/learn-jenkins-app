@@ -32,7 +32,7 @@ pipeline {
                     ls -al
                     node --version
                     npm --version
-                    test -f /build/index.html || { echo "index.html not found"; exit 1; }
+                    test -f build/index.html || { echo "index.html not found"; exit 1; }
                     npm run test
                 '''
             }
